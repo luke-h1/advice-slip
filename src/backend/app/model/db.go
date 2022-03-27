@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	_ "github.com/lib/pq"
+
 	"github.com/joho/godotenv"
 )
 
@@ -16,10 +18,6 @@ type connection struct {
 	User     string
 	Password string
 	DBName   string
-}
-
-func connToString(info connection) string {
-	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", info.Host, info.Port, info.User, info.Password, info.DBName)
 }
 
 func Init() {
@@ -38,10 +36,10 @@ func Init() {
 		DBName:   os.Getenv("POSTGRES_DB"),
 	}
 
-	db, err = sql.Open("postgress", connToString(conn))
+	db, err = sql.Open("postgres", connToString(conn))
 
 	if err != nil {
-		fmt.Printf("Error connecting to database: %s\n", err.Error())
+		fmt.Printf("Error opening database connection: %s\n", err.Error())
 		return
 	} else {
 		fmt.Println("Connected to database")
@@ -55,4 +53,8 @@ func Init() {
 	} else {
 		fmt.Println("Database is available")
 	}
+}
+
+func connToString(info connection) string {
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", info.Host, info.Port, info.User, info.Password, info.DBName)
 }

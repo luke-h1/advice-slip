@@ -1,25 +1,40 @@
 version: '3'
 
 services:
-  db:
+  postgres:
     image: postgres
     restart: always
     networks:
       - backend
     volumes:
-      - ./.db-data:/var/lib/postgresql/data
-      - ./src/config/init.sql:/docker-entrypoint-initdb.d/10-init.sql
+      - ./.db_data:/var/lib/postgresql/data
+      - ./app/config/init.sql:/docker-entrypoint-initdb.d/10-init.sql
     env_file:
-      - ./src/config/.env
+      - ./app/config/.env
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-q",
+          "-d",
+          "root",
+          "-U",
+          "root"
+        ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
 
-  src:
-    build: src
+  app:
+    build: app
     ports:
-      - 8000:8000
+      - 8050:8050
     networks:
       - backend
     depends_on:
-      - db
+      postgres:
+        condition: service_healthy
 
 volumes:
   db_data:

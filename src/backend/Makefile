@@ -11,3 +11,8 @@ help:
 .PHONY: start 
 start: 
 	docker-compose up --build
+
+
+.PHONY: clean 
+clean:
+	rm -rf .db-data .db_data tmp

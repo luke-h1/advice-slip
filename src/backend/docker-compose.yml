@@ -8,12 +8,12 @@ services:
       - backend
     volumes:
       - ./.db-data:/var/lib/postgresql/data
-      - ./app/config/init.sql:/docker-entrypoint-initdb.d/10-init.sql
+      - ./src/config/init.sql:/docker-entrypoint-initdb.d/10-init.sql
     env_file:
-      - ./app/config/.env
+      - ./src/config/.env
 
-  app:
-    build: app
+  src:
+    build: src
     ports:
       - 8000:8000
     networks:

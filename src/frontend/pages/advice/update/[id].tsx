@@ -1,8 +1,8 @@
-import type { NextPage } from 'next';
 import { GetServerSideProps } from 'next';
+import { getServerSideProps } from '../[id]';
 
-const Home: NextPage = () => {
-  return <div>😉</div>;
+const UpdateAdvicePage = () => {
+  return <div>Update !</div>;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -10,4 +10,5 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {},
   };
 };
-export default Home;
+
+export default UpdateAdvicePage;

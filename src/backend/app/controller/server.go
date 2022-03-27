@@ -6,6 +6,7 @@ import (
 
 	"github.com/gorilla/mux"
 	controller "github.com/luke-h1/advice-slip/controller/advice"
+	"github.com/rs/cors"
 )
 
 var router *mux.Router
@@ -20,7 +21,15 @@ func initHandlers() {
 
 func Start() {
 	router = mux.NewRouter().StrictSlash(true)
+
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://localhost:3000"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE"},
+	})
+
 	initHandlers()
-	http.ListenAndServe(":8050", router)
+
+	http.ListenAndServe(":8050", c.Handler(router))
+
 	fmt.Printf("Router initialized & listening on port 8050\n")
 }

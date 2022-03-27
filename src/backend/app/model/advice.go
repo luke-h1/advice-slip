@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -85,8 +84,7 @@ func UpdateAdvice(advice Advice, id uint64) error {
 
 	query := `UPDATE advice SET title=$1, content=$2 WHERE id = $3;`
 
-	result, err := db.Exec(query, advice.Title, advice.Content, id)
-	fmt.Println(result)
+	_, err := db.Exec(query, advice.Title, advice.Content, id)
 
 	if err != nil {
 		return err

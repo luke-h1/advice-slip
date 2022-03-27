@@ -21,8 +21,16 @@ const adviceService = {
     const response = await adviceClient.post('/advice', advice);
     return response.data;
   },
-  updateAdvice: async (advice: Advice): Promise<void> => {
-    const response = await adviceClient.put(`/advice/${advice.id}`, advice);
+  updateAdvice: async (
+    id: number,
+    title: string,
+    content: string,
+  ): Promise<void> => {
+    const response = await adviceClient.put(`/advice/${id}`, {
+      id,
+      title,
+      content,
+    });
     return response.data;
   },
   deleteAdvice: async (id: number): Promise<void> => {

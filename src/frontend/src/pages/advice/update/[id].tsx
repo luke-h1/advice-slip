@@ -1,4 +1,8 @@
+import { Box, Button } from '@chakra-ui/react';
+import { Form, Formik } from 'formik';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
+import { InputField } from '../../../components/InputField';
 import adviceService, {
   Advice as TAdvice,
 } from '../../../services/adviceService';
@@ -8,7 +12,51 @@ interface Props {
 }
 
 const UpdateAdvicePage = ({ advice }: Props) => {
-  return <div>{JSON.stringify(advice, null, 2)}</div>;
+  const router = useRouter();
+  return (
+    <Box mt={10}>
+      <Formik
+        initialValues={{ title: advice.title, content: advice.content }}
+        onSubmit={async values => {
+          const { title, content } = values;
+          const res = await adviceService.updateAdvice(
+            advice.id,
+            title,
+            content,
+          );
+          console.log(res);
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <InputField
+              type="text"
+              name="title"
+              placeholder="title"
+              label="title"
+            />
+            <InputField
+              type="text"
+              name="content"
+              placeholder="content"
+              label="content"
+            />
+            <Button
+              mt={4}
+              type="submit"
+              isLoading={isSubmitting}
+              disabled={isSubmitting}
+              onClick={() => {
+                router.push('/');
+              }}
+            >
+              update advice
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </Box>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async ctx => {

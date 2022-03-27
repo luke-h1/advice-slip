@@ -12,6 +12,10 @@ var router *mux.Router
 
 func initHandlers() {
 	router.HandleFunc("/api/advices", controller.GetAllAdvice).Methods("GET")
+	router.HandleFunc("/api/advice/{id}", controller.GetAdvice).Methods("GET")
+	router.HandleFunc("/api/advice", controller.CreateAdvice).Methods("POST")
+	router.HandleFunc("/api/advice/{id}", controller.UpdateAdvice).Methods("PUT")
+	router.HandleFunc("/api/advice/{id}", controller.DeleteAdvice).Methods("DELETE")
 }
 
 func Start() {

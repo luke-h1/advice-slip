@@ -1,4 +1,6 @@
+import { Box } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
+import AdviceCard from '../components/AdviceCard';
 import adviceService, { Advice } from '../services/adviceService';
 
 interface Props {
@@ -6,7 +8,12 @@ interface Props {
 }
 
 const Home = ({ advices }: Props) => {
-  return <div>{JSON.stringify(advices, null, 2)}</div>;
+  return (
+    <Box>
+      {advices &&
+        advices.map(advice => <AdviceCard advice={advice} key={advice.id} />)}
+    </Box>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {

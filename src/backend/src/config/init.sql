@@ -1,9 +1,10 @@
 create table if not exists advice (
-    id serial primary key not null unique AUTO_INCREMENT,
+  id serial not null unique AUTO_INCREMENT,
     title varchar(64) not null,
     content varchar(255) text not null,
     created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp
+    updated_at timestamp default current_timestamp,
+    primary key (id)
 );
 
 

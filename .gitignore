@@ -14,3 +14,14 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 node_modules
+.vscode
+.idea
+
+config/.env
+tmp
+.dbdata
+db_data
+.db_data
+.db-data
+.env
+!.env.example

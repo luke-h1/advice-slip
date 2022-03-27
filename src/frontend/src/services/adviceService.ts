@@ -1,6 +1,6 @@
 import adviceClient from './client/Client';
 
-interface Advice {
+export interface Advice {
   id: number;
   title: string;
   content: string;
@@ -21,11 +21,11 @@ const adviceService = {
     const response = await adviceClient.post('/advice', advice);
     return response.data;
   },
-  updateAdvice: async (advice: Advice): Promise<Advice> => {
+  updateAdvice: async (advice: Advice): Promise<void> => {
     const response = await adviceClient.put(`/advice/${advice.id}`, advice);
     return response.data;
   },
-  deleteAdvice: async (id: number): Promise<Advice> => {
+  deleteAdvice: async (id: number): Promise<void> => {
     const response = await adviceClient.delete(`/advice/${id}`);
     return response.data;
   },

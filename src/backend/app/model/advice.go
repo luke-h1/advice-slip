@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type Advice struct {
 	ID        uint64    `json:"id"`
@@ -78,10 +81,12 @@ func CreateAdvice(advice Advice) error {
 	return nil
 }
 
-func UpdateAdvice(advice Advice) error {
-	query := `UPDATE advice SET title=$1, content=$2 WHERE id=$3 RETURNING id, title, content, created_at, updated_at;`
+func UpdateAdvice(advice Advice, id uint64) error {
 
-	_, err := db.Exec(query, advice.Title, advice.Content, advice.ID)
+	query := `UPDATE advice SET title=$1, content=$2 WHERE id = $3;`
+
+	result, err := db.Exec(query, advice.Title, advice.Content, id)
+	fmt.Println(result)
 
 	if err != nil {
 		return err
